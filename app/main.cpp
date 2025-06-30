@@ -1,4 +1,6 @@
 #include "dummy.h"
+#include <git2.h>
+
 #include <iostream>
 
 int main()
