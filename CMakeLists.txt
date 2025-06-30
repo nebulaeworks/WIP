@@ -23,9 +23,12 @@ INCLUDE(FetchContent)
 INCLUDE(findGoogletest)
 ENFORCE_STYLE(libs)
 
+INCLUDE(addLibGit2)
+
 #iterate over all subdirectories in the libs directory and
 #add targets for each of them.
-SUBDIRLIST(LIBS ${CMAKE_SOURCE_DIR}/libs)
+#SUBDIRLIST(LIBS ${CMAKE_SOURCE_DIR}/libs)
+SUBDIRSLIST(RESULT LIBS CURDIR ${CMAKE_SOURCE_DIR}/libs EXCLUDE "external")
 FOREACH(LIB ${LIBS}) 
     FILE(GLOB_RECURSE LIB_SOURCES libs/${LIB}/src/*.cpp)
     ADD_LIBRARY(${LIB} ${LIB_SOURCES})
@@ -40,10 +43,12 @@ FOREACH(LIB ${LIBS})
     message(STATUS "Library target: '${LIB}' added" )
 ENDFOREACH()
 
+
+
 #Build App
 FILE(GLOB_RECURSE SOURCES app/*.cpp)
 ADD_EXECUTABLE(${PROJECT_NAME} ${SOURCES})
-TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC ${LIBS})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} PUBLIC ${LIBS} PRIVATE libgit2)
 ADD_DEPENDENCIES(${PROJECT_NAME} libDummy) # change this to 
 SET_TARGET_PROPERTIES(${PROJECT_NAME} PROPERTIES #be dynamic
     RUNTIME_OUTPUT_DIRECTORY bin
