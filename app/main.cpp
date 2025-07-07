@@ -7,4 +7,7 @@ int main()
 {
     dummy test{};
     std::cout << test.doSomething("hello world") << std::endl;
+
+    git_libgit2_init();
+    git_libgit2_shutdown();
 }
