@@ -42,10 +42,11 @@ FOREACH(LIB ${LIBS})
 ENDFOREACH()
 
 #add libgit2
-#SET(BUILD_SHARED_LIBS OFF)
-#SET(BUILD_CLAR OFF)
-#SET(THREADSAFE ON)
-#ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/libs/external/libgit2)
+SET(BUILD_SHARED_LIBS OFF)
+SET(BUILD_TESTS OFF)
+SET(THREADSAFE ON)
+SET(USE_GSSAPI OFF)
+ADD_SUBDIRECTORY(${CMAKE_SOURCE_DIR}/libs/external/libgit2)
 
 #Build App
 FILE(GLOB_RECURSE SOURCES app/*.cpp)
@@ -57,7 +58,8 @@ TARGET_LINK_LIBRARIES(
     PUBLIC
         ${LIBS} 
     PRIVATE 
-        ${CMAKE_SOURCE_DIR}/libs/thirdParty/libgit2.a
+#        ${CMAKE_SOURCE_DIR}/libs/thirdParty/libgit2.a
+        libgit2
         OpenSSL::SSL
         OpenSSL::Crypto
         ZLIB::ZLIB
